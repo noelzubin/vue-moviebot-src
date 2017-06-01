@@ -8,11 +8,13 @@ module.exports = {
   },
   env: {
     browser: true,
+    jasmine: true
   },
-  extends: 'airbnb-base',
+  extends: [ 'airbnb-base', "plugin:jasmine/recommended" ],
   // required to lint *.vue files
   plugins: [
-    'html'
+    'html',
+    'jasmine'
   ],
   // check if imports actually resolve
   'settings': {

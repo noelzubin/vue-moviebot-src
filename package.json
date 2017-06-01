@@ -11,6 +11,8 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.16.1",
+    "eslint-plugin-jasmine": "^2.2.0",
     "node-sass": "^4.5.3",
     "pug": "^2.0.0-rc.1",
     "pug-loader": "^2.3.0",
