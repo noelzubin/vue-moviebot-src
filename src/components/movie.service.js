@@ -21,14 +21,17 @@ module.exports = class MovieService {
         const phraseId = data.docs[0].phrase_id;
         return this.getNextPhrase(titleId, phraseId);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        throw new Error('Could not fetch dialogue');
       })
       .then((resp) => {
         const data = resp.data;
         const repData = data.docs[3];
         const replyDialogue = { phrase: repData.phrase, movieTitle: repData.title };
         return replyDialogue;
+      })
+      .catch((e) => {
+        console.log(e);
       });
   }
 
