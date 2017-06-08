@@ -1,19 +1,39 @@
 <template lang="pug">
   div#app
-    ChatApp
-    SendMessage
+    ChatApp( :messages="messages")
+    SendMessage(@askDialogue="askDialogue")
 </template>
 
 <script>
 // import Hello from './components/Hello';
 import ChatApp from './components/ChatApp';
 import SendMessage from './components/SendMessage';
+import MovieService from './components/movie.service';
 
 export default {
   name: 'app',
   components: {
     ChatApp,
     SendMessage,
+  },
+  data() {
+    return {
+      movieSerivce: new MovieService(),
+      messages: [],
+    };
+  },
+  methods: {
+    askDialogue(dialogue) {
+      // const that = this;
+      this.messages.push({ type: 'user', dialogue });
+      this.movieSerivce.getReply(dialogue)
+        .then((data) => {
+          this.messages.push({ type: 'bot', dialogue: data.data.reply, movie: data.data.movieTitle });
+        })
+        .catch(() => {
+          this.messages.push({ type: 'bot', dialogue: 'couldn\'t find dialogue, You win this time', movie: '' });
+        });
+    },
   },
 };
 </script>

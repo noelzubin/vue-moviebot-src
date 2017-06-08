@@ -1,36 +1,14 @@
 <template lang="pug">
   div#ChatApp 
     div.scrollContainer
-      div.userMessageBlock.clearfix
-        div.userMessage avada kedavraa asdf lorem
-      div.BotMessageBlock.clearfix
-        div.BotMessage 
-          span.phrase Stupefy
-          span.movie Harry Potter and the deathly hallows
-      div.userMessageBlock.clearfix
-        div.userMessage avada kedavraa asdf lorem
-      div.BotMessageBlock.clearfix
-        div.BotMessage 
-          span.phrase Stupefy
-          span.movie Harry Potter and the deathly hallows
-      div.userMessageBlock.clearfix
-        div.userMessage avada kedavraa asdf lorem
-      div.BotMessageBlock.clearfix
-        div.BotMessage 
-          span.phrase Stupefy
-          span.movie Harry Potter and the deathly hallows
-      div.userMessageBlock.clearfix
-        div.userMessage avada kedavraa asdf lorem
-      div.BotMessageBlock.clearfix
-        div.BotMessage 
-          span.phrase Stupefy
-          span.movie Harry Potter and the deathly hallows
-      div.userMessageBlock.clearfix
-        div.userMessage avada kedavraa asdf lorem
-      div.BotMessageBlock.clearfix
-        div.BotMessage 
-          span.phrase Stupefy
-          span.movie Harry Potter and the deathly hallows
+      div.simplyfor(v-for="message in reversedMessages")
+        div.userMessageBlock.clearfix( v-if="message.type=='user'" )
+          div.userMessage {{ message.dialogue }}
+        div.BotMessageBlock.clearfix(v-else)
+          div.BotMessage 
+            span.phrase {{ message.dialogue }}
+            span.movie {{ message.movie }}
+     
       
 
 </template>
@@ -39,7 +17,15 @@
 export default {
   name: 'ChatApp',
   data() {
-    return { };
+    return {};
+  },
+  props: [
+    'messages',
+  ],
+  computed: {
+    reversedMessages() {
+      return this.messages.slice().reverse();
+    },
   },
 };
 </script>
@@ -59,6 +45,8 @@ export default {
     padding-right: 15px
     display: flex
     flex-direction: column-reverse
+    padding-bottom: 20px
+    transform: translateY(-20px)
   .userMessageBlock
     width: 100%
     color: #3c3c3c
@@ -107,5 +95,5 @@ export default {
     .BotMessageBlock
       .BotMessage
         margin-left: 10px
-    
+
 </style>
