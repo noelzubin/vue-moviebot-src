@@ -1,7 +1,7 @@
 <template lang="pug">
   div#app
     ChatApp( :messages="messages")
-    SendMessage(@askDialogue="askDialogue")
+    SendMessage(@askDialogue="askDialogue" :showAnim="showAnim")
 </template>
 
 <script>
@@ -19,19 +19,29 @@ export default {
   data() {
     return {
       movieSerivce: new MovieService(),
-      messages: [],
+      messages: [
+        {
+          type: 'bot',
+          dialogue: 'send a quote and the bot replies with the next quote from the movie.',
+          movie: 'noel zubin',
+        },
+      ],
+      showAnim: false,
     };
   },
   methods: {
     askDialogue(dialogue) {
       // const that = this;
       this.messages.push({ type: 'user', dialogue });
+      this.showAnim = true;
       this.movieSerivce.getReply(dialogue)
         .then((data) => {
           this.messages.push({ type: 'bot', dialogue: data.data.reply, movie: data.data.movieTitle });
+          this.showAnim = false;
         })
         .catch(() => {
           this.messages.push({ type: 'bot', dialogue: 'couldn\'t find dialogue, You win this time', movie: '' });
+          this.showAnim = false;
         });
     },
   },
@@ -40,8 +50,10 @@ export default {
 
 <style lang="sass">
 
+input
+  font-family: 'Montserrat', sans-serif  
 html, body 
-  font-family: 'Avenir', Helvetica, Arial, sans-serif
+  font-family: 'Montserrat', sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   margin: 0
